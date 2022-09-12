@@ -1,8 +1,8 @@
-import React from 'react'
 import Icon from '@/components/Icon'
 import styles from './index.module.scss'
 import { useHistory } from 'react-router'
 import classNames from 'classnames'
+import { ReactElement } from 'react'
 // import { withRouter } from 'react-router-dom'
 // 1. withRouter的使用
 // history match location: 这个组件必须是通过路由配置的  <Route></Route>
@@ -10,7 +10,14 @@ import classNames from 'classnames'
 
 // 2. 路由提供了几个和路由相关的hook
 // useHistory  useLocation  useParams
-function NavBar({ children, extra, onLeftClick, className }) {
+type Props = {
+  children: string | ReactElement
+  extra?: string | ReactElement
+  className?: string
+  onLeftClick?: () => void
+}
+
+function NavBar({ children, extra, onLeftClick, className }: Props) {
   const history = useHistory()
   const back = () => {
     // 跳回上一页
