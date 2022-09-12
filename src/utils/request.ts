@@ -1,5 +1,5 @@
 import { Toast } from 'antd-mobile'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { getTokenInfo, setTokenInfo } from './storage'
 import history from './history'
 import store from '@/store'
@@ -33,7 +33,7 @@ instance.interceptors.response.use(
     // 对响应做点什么...
     return response.data
   },
-  async (err) => {
+  async (err: AxiosError<{ message: string }>) => {
     // 如果因为网络原因，response没有，给提示消息
     if (!err.response) {
       Toast.info('网络繁忙，请稍后重试')
