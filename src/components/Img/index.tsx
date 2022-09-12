@@ -3,8 +3,14 @@ import { useEffect, useRef, useState } from 'react'
 import Icon from '../Icon'
 import styles from './index.module.scss'
 
-const Image = ({ className, src, alt }) => {
-  const imgRef = useRef(null)
+type Props = {
+  className?: string
+  src: string
+  alt?: string
+}
+const Image = ({ className, src, alt }: Props) => {
+  // useRef 是泛型，接收什么类型，然后返回的current 就是什么类型。
+  const imgRef = useRef<HTMLImageElement>(null)
   // 控制是否在加载
   const [loading, setLoading] = useState(true)
   // 控制是否加载失败
@@ -21,15 +27,16 @@ const Image = ({ className, src, alt }) => {
   }
   useEffect(() => {
     // 监听图片
+    const current = imgRef.current!
     const observer = new IntersectionObserver(([{ isIntersecting }]) => {
       if (isIntersecting) {
         // 图片在可视区
-        imgRef.current.src = imgRef.current.dataset.src
+        current.src = current.dataset.src!
         // 取消监听
-        observer.unobserve(imgRef.current)
+        observer.unobserve(current)
       }
     })
-    observer.observe(imgRef.current)
+    observer.observe(current)
   }, [])
   return (
     <div className={classnames(styles.root, className)}>
