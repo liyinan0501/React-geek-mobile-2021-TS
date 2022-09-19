@@ -1,23 +1,37 @@
 import classNames from 'classnames'
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './index.module.scss'
+
+type Props = Omit<
+  React.DetailedHTMLProps<
+    React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+    HTMLTextAreaElement
+  >,
+  'maxLength' | 'value' | 'onChange'
+> & {
+  maxLength?: number
+  className?: string
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+}
+
 export default function Textarea({
   maxLength = 100,
   className,
   value,
   onChange,
   ...rest
-}) {
+}: Props) {
   const [content, setContent] = useState(value || '')
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value)
     onChange && onChange(e)
   }
-  const textRef = useRef(null)
+  const textRef = useRef<HTMLTextAreaElement>(null)
   useEffect(() => {
-    textRef.current.focus()
+    textRef.current!.focus()
     // https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLInputElement/setSelectionRange
-    textRef.current.setSelectionRange(-1, -1)
+    textRef.current!.setSelectionRange(-1, -1)
   }, [])
   return (
     <div className={styles.root}>
