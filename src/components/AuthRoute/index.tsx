@@ -1,8 +1,13 @@
 import { hasToken } from '@/utils/storage'
 import React from 'react'
-import { Route, Redirect, useLocation } from 'react-router-dom'
+import { Route, Redirect, useLocation, RouteProps } from 'react-router-dom'
 
-export default function AuthRoute({ component: Component, ...rest }) {
+interface Props extends RouteProps {
+  // any:组件props可以接受任意类型
+  component: React.ComponentType<any>
+}
+
+export default function AuthRoute({ component: Component, ...rest }: Props) {
   const location = useLocation()
   // console.log(location)
   return (
