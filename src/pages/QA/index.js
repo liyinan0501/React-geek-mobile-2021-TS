@@ -90,6 +90,8 @@ const Question = () => {
           </div>
         </div>
       </div>
+
+      {/* 测试TS组件： */}
     </div>
   )
 }
