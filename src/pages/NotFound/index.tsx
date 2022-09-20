@@ -13,7 +13,7 @@ export default function NotFound() {
   //   }
   // }, [time, history])
   useEffect(() => {
-    let timer = setTimeout(() => {
+    let timer = window.setTimeout(() => {
       setTime(time - 1)
     }, 1000)
     return () => {
