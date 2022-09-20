@@ -1,7 +1,8 @@
 import request from '@/utils/request'
 import { setTokenInfo, removeTokenInfo } from '@/utils/storage'
+import { Dispatch } from 'redux'
 
-export const sendCode = (mobile) => {
+export const sendCode = (mobile: string) => {
   return async () => {
     // 发送请求
     await request({
@@ -11,7 +12,12 @@ export const sendCode = (mobile) => {
   }
 }
 
-export const saveToken = (payload) => {
+type Token = {
+  token: string
+  refresh_token: string
+}
+
+export const saveToken = (payload: Token) => {
   return {
     type: 'login/token',
     payload,
@@ -23,8 +29,10 @@ export const saveToken = (payload) => {
  * @param {*} data
  * @returns
  */
-export const login = (data) => {
-  return async (dispatch) => {
+
+export const login = (data: { mobile: string; code: string }) => {
+  // dispatch 发送的 action 必须要有type属性 以及任意的其他属性。
+  return async (dispatch: Dispatch) => {
     const res = await request({
       method: 'post',
       url: '/authorizations',
@@ -42,7 +50,7 @@ export const login = (data) => {
  * @returns
  */
 export const logout = () => {
-  return (dispatch) => {
+  return (dispatch: Dispatch) => {
     removeTokenInfo()
     dispatch({
       type: 'login/logout',
