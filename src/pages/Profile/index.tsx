@@ -1,4 +1,5 @@
 import Icon from '@/components/Icon'
+import { RootState } from '@/store'
 import { getUser } from '@/store/actions/profile'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
@@ -9,7 +10,11 @@ import styles from './index.module.scss'
 const Profile = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.profile.user)
+  // useSelector 泛型参数
+  // 参数1 指定state类型
+  // 参数2 指定返回值类型，也就是指定user类型。
+  // const user = useSelector<RootState, RootState['profile']['user']>((state) => state.profile.user)
+  const user = useSelector((state: RootState) => state.profile.user)
 
   // 页面一进入，就需要发送请求，获取用户信息
   useEffect(() => {

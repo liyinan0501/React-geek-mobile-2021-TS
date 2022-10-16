@@ -15,4 +15,7 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 )
 
+// ReturnType 获取函数类型返回值的类型
+export type RootState = ReturnType<typeof store.getState>
+
 export default store
