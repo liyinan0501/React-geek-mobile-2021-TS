@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 import { setTokenInfo, removeTokenInfo } from '@/utils/storage'
 import { Dispatch } from 'redux'
+import { LoginAction } from '../reducers/login'
 
 export const sendCode = (mobile: string) => {
   return async () => {
@@ -17,7 +18,7 @@ type Token = {
   refresh_token: string
 }
 
-export const saveToken = (payload: Token) => {
+export const saveToken = (payload: Token): LoginAction => {
   return {
     type: 'login/token',
     payload,
@@ -49,11 +50,9 @@ export const login = (data: { mobile: string; code: string }) => {
  * 退出
  * @returns
  */
-export const logout = () => {
-  return (dispatch: Dispatch) => {
-    removeTokenInfo()
-    dispatch({
-      type: 'login/logout',
-    })
+export const logout = (payload: Token) => {
+  return {
+    type: 'login/logout',
+    payload,
   }
 }

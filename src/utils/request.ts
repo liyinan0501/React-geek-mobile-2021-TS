@@ -1,9 +1,10 @@
 import { Toast } from 'antd-mobile'
 import axios, { AxiosError } from 'axios'
-import { getTokenInfo, setTokenInfo } from './storage'
+import { getTokenInfo, removeTokenInfo, setTokenInfo } from './storage'
 import history from './history'
 import store from '@/store'
 import { logout, saveToken } from '@/store/actions/login'
+import { remove } from 'lodash'
 const baseURL = 'http://geek.itheima.net/v1_0/'
 const instance = axios.create({
   timeout: 5000,
@@ -83,14 +84,22 @@ instance.interceptors.response.use(
       // console.log(tokenInfo)
       // 保存到redux中
       store.dispatch(saveToken(tokenInfo))
-      // 保存到localstorage中
+      // store.dispatch({
+      //   type: 'login/token',
+      //   payload: tokenInfo,
+      // })
+      // 保存到localStorage中
       setTokenInfo(tokenInfo)
 
       // token刷新成功后，重新把最开始失败的请求重新发一次
       return instance(config)
     } catch {
       // 刷新token失败, 刷新token过期
-      store.dispatch(logout())
+      // store.dispatch 类型就是dispatch类型，要求参数必须有type才行。
+      // store.dispatch(logout())
+      // 移除本地token
+      removeTokenInfo()
+      store.dispatch(saveToken({ token: '', refresh_token: '' }))
       // 跳转到登录页
       history.push({
         pathname: '/login',
