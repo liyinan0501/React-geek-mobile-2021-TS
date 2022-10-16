@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { setTokenInfo, removeTokenInfo } from '@/utils/storage'
+import { setTokenInfo } from '@/utils/storage'
 import { Dispatch } from 'redux'
 import { LoginAction } from '../reducers/login'
 
@@ -50,9 +50,9 @@ export const login = (data: { mobile: string; code: string }) => {
  * 退出
  * @returns
  */
-export const logout = (payload: Token) => {
-  return {
-    type: 'login/logout',
-    payload,
-  }
-}
+// export const logout = (payload: Token) => {
+//   return {
+//     type: 'login/logout',
+//     payload,
+//   }
+// }
