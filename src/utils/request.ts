@@ -3,8 +3,8 @@ import axios, { AxiosError } from 'axios'
 import { getTokenInfo, removeTokenInfo, setTokenInfo } from './storage'
 import history from './history'
 import store from '@/store'
-import { logout, saveToken } from '@/store/actions/login'
-import { remove } from 'lodash'
+import { saveToken } from '@/store/actions/login'
+
 const baseURL = 'http://geek.itheima.net/v1_0/'
 const instance = axios.create({
   timeout: 5000,
